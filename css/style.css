@@ -1,0 +1,38 @@
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 70px;
+  height: 50px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: white;
+  border: 0px;
+  border-radius: 8px;
+}
+
+.header {
+	text-align: center;
+	color: #000;
+	border-bottom: solid 5px #C01B5A;
+  	padding: 4em 0 1em 0;
+  	margin-bottom: 15px;
+}
+
+.header h2 {
+	opacity: 0.7;
+}
+
+.explanation {
+	text-align: justify;
+	font-size: 12pt;
+}
+
+.explanation a {
+	text-decoration: none;
+	color: #1BC0A2
+}
+
+.footer {
+	border-top: solid 5px #1BC0A2;
+  	padding: 1em 0 1em 0;
+}
