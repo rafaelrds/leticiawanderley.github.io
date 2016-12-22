@@ -95,7 +95,7 @@ d3.csv("frequencia.csv", type, function(error, data) {
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(-" + margin.right * 10 + ", " + i * 20 + ")"; })
-      .style("font", "10px sans-serif");
+      .style("font", "14px sans-serif");
 
   legend.append("rect")
       .attr("x", width + 18)
