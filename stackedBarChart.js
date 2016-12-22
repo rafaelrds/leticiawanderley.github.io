@@ -65,25 +65,27 @@ d3.csv("frequencia.csv", type, function(error, data) {
   g.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + height + ")")
+      .style("font", "14px sans-serif")
       .call(d3.axisBottom(x))
 
   svg.append("text")
       .attr("transform",
-            "translate(" + (width/2) + " ," + (height + margin.bottom - 60) + ")")
+            "translate(" + (width/2) + " ," + (height + margin.bottom - 55) + ")")
       .style("text-anchor", "middle")
-      .attr("font-size", "12px")
+      .attr("font-size", "14px")
       .attr("fill", "#000")
       .text("Letra");
 
   g.append("g")
       .attr("class", "axis axis--y")
+      .style("font", "14px sans-serif")
       .call(d3.axisLeft(y).ticks(10, "s"))
     .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 10 - margin.left)
       .attr("x",0 - (height / 2))
-      .attr("font-size", "12px")
-      .attr("dy", "0.35em")
+      .attr("font-size", "14px")
+      .attr("dy", "0.01em")
       .attr("text-anchor", "middle")
       .attr("fill", "#000")
       .text("Frequência relativa");
