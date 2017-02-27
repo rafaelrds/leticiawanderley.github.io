@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>Pessoas aleatórias fazendo coisas aleatórias</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+
+        body {
+            font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .dot {
+            stroke: #000;
+        }
+
+    </style>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 col-xl-8 col-xl-offset-2">
+    <div class="header">
+        <h2>Pessoas aleatórias fazendo coisas aleatórias</h2>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 col-xl-8 col-xl-offset-2 explanation">
+					<span>
+						Quão aleatórias são as pessoas? Quando elas tentam ser aleatórias escrevendo caracteres, elas caem num padrão?
+						Vários individuos foram convidados a digitar textos aleatórios em um <a href="https://nazareno.typeform.com/to/giC9Vw">formulário online</a> e a frequência relativa das letras digitadas foi comparada à <a href="https://pt.wikipedia.org/wiki/Frequ%C3%AAncia_de_letras#Frequ.C3.AAncias_relativas_das_letras_em_outros_idiomas">frequência relativa</a> das letras na Língua Portuguesa.
+					</span>
+
+        <div id="scatterPlotChart">
+            <script>
+                var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                    width = 960 - margin.left - margin.right,
+                    height = 500 - margin.top - margin.bottom;
+
+                var x = d3.scale.linear()
+                    .range([0, width]);
+
+                var y = d3.scale.linear()
+                    .range([height, 0]);
+
+                var color = d3.scale.category10();
+
+                var xAxis = d3.svg.axis()
+                    .scale(x)
+                    .orient("bottom");
+
+                var yAxis = d3.svg.axis()
+                    .scale(y)
+                    .orient("left");
+
+                var svg = d3.select("body").append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                d3.tsv("frequencia.tsv", function(error, data) {
+                    if (error) throw error;
+
+                    data.forEach(function(d) {
+                        console.log(d);
+                        console.log(d.frequencia);
+                        console.log(d.pt);
+                        d.frequencia = +d.frequencia;
+                        d.pt = +d.pt;
+                    });
+
+                    x.domain(d3.extent(data, function(d) { return d.pt; })).nice();
+                    y.domain(d3.extent(data, function(d) { return d.frequencia; })).nice();
+
+                    svg.append("g")
+                        .attr("class", "x axis")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(xAxis)
+                        .append("text")
+                        .attr("class", "label")
+                        .attr("x", width)
+                        .attr("y", -6)
+                        .style("text-anchor", "end")
+                        .text("Sepal Width (cm)");
+
+                    svg.append("g")
+                        .attr("class", "y axis")
+                        .call(yAxis)
+                        .append("text")
+                        .attr("class", "label")
+                        .attr("transform", "rotate(-90)")
+                        .attr("y", 6)
+                        .attr("dy", ".71em")
+                        .style("text-anchor", "end")
+                        .text("Sepal Length (cm)")
+
+                    svg.selectAll(".dot")
+                        .data(data)
+                        .enter().append("circle")
+                        .attr("class", "dot")
+                        .attr("r", 3.5)
+                        .attr("cx", function(d) { return x(d.pt); })
+                        .attr("cy", function(d) { return y(d.frequencia); })
+                        .style("fill", function(d) { return color(d.species); });
+
+                    var legend = svg.selectAll(".legend")
+                        .data(color.domain())
+                        .enter().append("g")
+                        .attr("class", "legend")
+                        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+                    legend.append("rect")
+                    .attr("x", width - 18)
+                        .attr("width", 18)
+                        .attr("height", 18)
+                        .style("fill", color);
+
+                    legend.append("text")
+                        .attr("x", width - 24)
+                        .attr("y", 9)
+                        .attr("dy", ".35em")
+                        .style("text-anchor", "end")
+                        .text(function(d) { return d; });
+
+                });
+
+            </script>
+        </div>
+    </div>
+
+    <div class="footer"></div>
+</div>
+</div>
+</body>
+</html>
