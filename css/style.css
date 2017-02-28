@@ -13,7 +13,7 @@ div.tooltip {
 .header {
 	text-align: center;
 	color: #000;
-	border-bottom: solid 5px #C01B5A;
+	/*border-bottom: solid 5px #C01B5A;*/
   	padding: 4em 0 1em 0;
   	margin-bottom: 15px;
 }
@@ -33,6 +33,6 @@ div.tooltip {
 }
 
 .footer {
-	border-top: solid 5px #1BC0A2;
+	/*border-top: solid 5px #1BC0A2;*/
   	padding: 1em 0 1em 0;
 }

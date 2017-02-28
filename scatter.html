@@ -39,6 +39,7 @@
 
         <div id="scatterPlotChart">
             <script>
+
                 var margin = {top: 20, right: 20, bottom: 30, left: 40},
                     width = 960 - margin.left - margin.right,
                     height = 500 - margin.top - margin.bottom;
@@ -71,13 +72,12 @@
                     data.forEach(function(d) {
                         console.log(d);
                         console.log(d.frequencia);
-                        console.log(d.pt);
+                        d.letra = +d.letra;
                         d.frequencia = +d.frequencia;
-                        d.pt = +d.pt;
                     });
 
-                    x.domain(d3.extent(data, function(d) { return d.pt; })).nice();
-                    y.domain(d3.extent(data, function(d) { return d.frequencia; })).nice();
+                    x.domain(d3.extent(data, function(d) { return d.frequencia; })).nice();
+                    y.domain(d3.extent(data, function(d) { return d.letra; })).nice();
 
                     svg.append("g")
                         .attr("class", "x axis")
@@ -106,8 +106,8 @@
                         .enter().append("circle")
                         .attr("class", "dot")
                         .attr("r", 3.5)
-                        .attr("cx", function(d) { return x(d.pt); })
-                        .attr("cy", function(d) { return y(d.frequencia); })
+                        .attr("cx", function(d) { return x(d.frequencia); })
+                        .attr("cy", function(d) { return y(d.letra); })
                         .style("fill", function(d) { return color(d.species); });
 
                     var legend = svg.selectAll(".legend")
@@ -117,7 +117,7 @@
                         .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
                     legend.append("rect")
-                    .attr("x", width - 18)
+                        .attr("x", width - 18)
                         .attr("width", 18)
                         .attr("height", 18)
                         .style("fill", color);
