@@ -36,3 +36,8 @@ div.tooltip {
 	/*border-top: solid 5px #1BC0A2;*/
   	padding: 1em 0 1em 0;
 }
+
+svg{
+	display: block;
+	margin: auto;
+}

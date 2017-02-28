@@ -34,7 +34,10 @@
     <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 col-xl-8 col-xl-offset-2 explanation">
 					<span>
 						Quão aleatórias são as pessoas? Quando elas tentam ser aleatórias escrevendo caracteres, elas caem num padrão?
-						Vários individuos foram convidados a digitar textos aleatórios em um <a href="https://nazareno.typeform.com/to/giC9Vw">formulário online</a> e a frequência relativa das letras digitadas foi comparada à <a href="https://pt.wikipedia.org/wiki/Frequ%C3%AAncia_de_letras#Frequ.C3.AAncias_relativas_das_letras_em_outros_idiomas">frequência relativa</a> das letras na Língua Portuguesa.
+                    </br>
+                        O gráfico mostrado foi baseado no trabalho exibido no em <a href="https://leticiawanderley.github.io/"> leticiawanderley.github.com</a>
+                        ,onde os pontos azuis representam a frequência das letras dos textos aleatórios e os laranjas, da Língua Portuguesa.
+                        O gráfico representa uma melhoria, possibilita a comparação entre letras de ambas as categorias.
 					</span>
 
         <div id="scatterPlotChart">
@@ -44,8 +47,8 @@
                     width = 960 - margin.left - margin.right,
                     height = 500 - margin.top - margin.bottom;
 
-                var x = d3.scale.linear()
-                    .range([0, width]);
+                var x = d3.scale.ordinal()
+                    .rangeRoundBands([0, width], 1, 0.2);
 
                 var y = d3.scale.linear()
                     .range([height, 0]);
@@ -66,18 +69,16 @@
                     .append("g")
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-                d3.tsv("frequencia.tsv", function(error, data) {
+                d3.tsv("frequencia.tsv", type, function(error, data) {
                     if (error) throw error;
 
                     data.forEach(function(d) {
-                        console.log(d);
-                        console.log(d.frequencia);
-                        d.letra = +d.letra;
                         d.frequencia = +d.frequencia;
+                        d.letra = d.letra;
                     });
 
-                    x.domain(d3.extent(data, function(d) { return d.frequencia; })).nice();
-                    y.domain(d3.extent(data, function(d) { return d.letra; })).nice();
+                    x.domain(data.map(function(d) { return d.letra; }));
+                    y.domain(d3.extent(data, function(d) { return d.frequencia; })).nice();
 
                     svg.append("g")
                         .attr("class", "x axis")
@@ -85,10 +86,10 @@
                         .call(xAxis)
                         .append("text")
                         .attr("class", "label")
-                        .attr("x", width)
+                        .attr("x", width + 20)
                         .attr("y", -6)
                         .style("text-anchor", "end")
-                        .text("Sepal Width (cm)");
+                        .text("Letra");
 
                     svg.append("g")
                         .attr("class", "y axis")
@@ -96,19 +97,19 @@
                         .append("text")
                         .attr("class", "label")
                         .attr("transform", "rotate(-90)")
-                        .attr("y", 6)
+                        .attr("y", 2)
                         .attr("dy", ".71em")
                         .style("text-anchor", "end")
-                        .text("Sepal Length (cm)")
+                        .text("Frequência Relativa(%)")
 
                     svg.selectAll(".dot")
                         .data(data)
                         .enter().append("circle")
                         .attr("class", "dot")
-                        .attr("r", 3.5)
-                        .attr("cx", function(d) { return x(d.frequencia); })
-                        .attr("cy", function(d) { return y(d.letra); })
-                        .style("fill", function(d) { return color(d.species); });
+                        .attr("r", 4)
+                        .attr("cx", function(d) { return x(d.letra); })
+                        .attr("cy", function(d) { return y(d.frequencia); })
+                        .style("fill", function(d) { return color(d.tipo); });;
 
                     var legend = svg.selectAll(".legend")
                         .data(color.domain())
@@ -130,6 +131,11 @@
                         .text(function(d) { return d; });
 
                 });
+
+                function type(d) {
+                    d.frequencia = +d.frequencia;
+                    return d;
+                }
 
             </script>
         </div>
