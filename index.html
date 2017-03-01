@@ -38,13 +38,14 @@
                         </br>
                         O gráfico é uma remodelagem do trabalho de
                         <a href="https://leticiawanderley.github.io/">Letícia Wanderley </a>.
-                        Vários individuos foram convidados a digitar textos aleatórios em
+                        onde vários individuos foram convidados a digitar textos aleatórios em
                         um <a href="https://nazareno.typeform.com/to/giC9Vw">formulário online</a>
                         e a frequência relativa das letras digitadas foi comparada à frequência relativa das letras na
                         <a href="https://pt.wikipedia.org/wiki/Frequ%C3%AAncia_de_letras#Frequ.C3.AAncias_relativas_das_letras_em_outros_idiomas">Língua Portuguesa</a>.
                         </br>
-                        A linha cinza que divide o gráfico divide as letras.
-                        Acima dela, as que foram mais frequentes no Português e abaixo, no experimento.
+                        A linha cinza que divide o gráfico divide a frequência das letras.
+                        Acima dela, as que foram mais frequentes no Português e abaixo
+                        as que foram mais frequentes no experimento.
 					</span>
 
         <div id="scatterPlotChart">
@@ -110,7 +111,7 @@
                         .attr("x", width)
                         .attr("y", -6)
                         .style("text-anchor", "end")
-                        .text("Frequência pt-br (%)");
+                        .text("Frequência Aleatória (%)");
 
                     // y-axis
                     svg.append("g")
@@ -122,7 +123,7 @@
                         .attr("y", 6)
                         .attr("dy", ".71em")
                         .style("text-anchor", "end")
-                        .text("Frequência Aleatória (%)");
+                        .text("Frequência pt-br (%)");
 
                     // draw dots
                     svg.selectAll(".dot")
